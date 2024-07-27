@@ -10,8 +10,10 @@ import '@fontsource-variable/overpass';
 import CustomAppBar from '../components/CustomAppBar';
 import FileUploadBox from '../components/FileUploadBox';
 import CustomStepper from '../components/CustomStepper';
+import useStepOneStore from '../store/stepOneStore';
 
 export default function StepOne() {
+  const stepOneDone = useStepOneStore((state) => state.stepOneDone);
   return (
     <Container sx={styles.bodyCont}>
       <Typography
@@ -39,6 +41,12 @@ export default function StepOne() {
 }
 
 const styles = {
+  topLevelCont: {
+    padding: '0px !important',
+    backgroundColor: '#e4eae1',
+    color: '#e4eae1',
+    height: '100vh'
+  },
   bodyCont: {
     display: 'flex',
     flexDirection: 'column',
