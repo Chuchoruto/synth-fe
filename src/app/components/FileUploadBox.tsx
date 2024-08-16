@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, DragEvent, ChangeEvent, useRef } from 'react';
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, Button } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 interface FileUploadBoxProps {
@@ -11,6 +11,7 @@ interface FileUploadBoxProps {
 const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>): void => {
@@ -49,9 +50,40 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
     ) {
       setFile(file);
       setError('');
+      setMessage(''); // Clear any previous messages
     } else {
       setFile(null);
       setError('Please upload only .xlsx or .csv files');
+    }
+  };
+
+  const handleFileUpload = async (): Promise<void> => {
+    if (!file) {
+      setError('Please select a file to upload.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      // Update the fetch URL to include /api
+      const response = await fetch('http://samplify-app.com/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setMessage('File uploaded successfully: ' + result.file_path);
+        setError(''); // Clear any previous errors
+      } else {
+        setMessage('');
+        setError('Failed to upload file.');
+      }
+    } catch (error) {
+      setMessage('');
+      setError('Error uploading file: ' + error.message);
     }
   };
 
@@ -80,7 +112,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
         </Typography>
         {file && (
           <Typography variant="body2" color="primary" mt={2}>
-            File uploaded: {file.name}
+            File ready for upload: {file.name}
           </Typography>
         )}
         {error && (
@@ -88,7 +120,22 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
             {error}
           </Typography>
         )}
+        {message && (
+          <Typography variant="body2" color="primary" mt={2}>
+            {message}
+          </Typography>
+        )}
       </Paper>
+      {file && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleFileUpload}
+          sx={{ mt: 2 }}
+        >
+          Upload File
+        </Button>
+      )}
     </>
   );
 };
