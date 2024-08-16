@@ -23,7 +23,7 @@ export default function StepOne() {
         color="black"
         fontWeight="bold"
       >
-        Welcome to Synth <br />
+        Welcome to Samplify <br />
         <br />
       </Typography>
       <Typography
@@ -32,8 +32,7 @@ export default function StepOne() {
         color="black"
         fontFamily="Outfit Variable"
       >
-        To get started please upload a sample dataset in either .csv, .json, or
-        .xlsx format.
+        To get started please upload a sample dataset in .csv format.
       </Typography>
       <FileUploadBox />
     </Container>
