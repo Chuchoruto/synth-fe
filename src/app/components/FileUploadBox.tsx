@@ -83,7 +83,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
       }
     } catch (error) {
       setMessage('');
-      setError('Error uploading file: ' + error.message);
+      setError('Error uploading file: ' + (error as Error).message);
     }
   };
 
