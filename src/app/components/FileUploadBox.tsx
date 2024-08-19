@@ -68,7 +68,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
 
     try {
       // Update the fetch URL to include /api
-      const response = await fetch('http://samplify-app.com/api/upload', {
+      const response = await fetch('http://api.samplify-app.com/api/upload', {
         method: 'POST',
         body: formData,
       });
