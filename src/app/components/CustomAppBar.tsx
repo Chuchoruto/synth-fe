@@ -18,8 +18,10 @@ const pages = ['Home', 'About'];
 import usePageOneStore from '../store/pageStore';
 
 function ResponsiveAppBar() {
-  const anchorElNav = usePageOneStore((state) => state.anchorElNav);
-  const setAnchorElNav = usePageOneStore((state) => state.setAnchorElNav);
+  const { anchorElNav, setAnchorElNav } = usePageOneStore((state) => ({
+    anchorElNav: state.anchorElNav,
+    setAnchorElNav: state.setAnchorElNav
+  }));
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

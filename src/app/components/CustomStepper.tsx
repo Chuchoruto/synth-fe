@@ -20,9 +20,11 @@ const steps = ['Step 1', 'Step 2'];
 interface CustomStepperProps {}
 
 const CustomStepper = (props: CustomStepperProps) => {
-  const activeStep = usePageOneStore((state) => state.activeStep);
-  const handleBack = usePageOneStore((state) => state.handleBack);
-  const handleNext = usePageOneStore((state) => state.handleNext);
+  const { activeStep, handleBack, handleNext } = usePageOneStore((state) => ({
+    activeStep: state.activeStep,
+    handleBack: state.handleBack,
+    handleNext: state.handleNext
+  }));
 
   const getStepContent = (step: number) => {
     switch (step) {

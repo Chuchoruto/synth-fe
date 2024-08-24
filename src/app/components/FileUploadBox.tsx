@@ -11,12 +11,25 @@ interface FileUploadBoxProps {
 }
 
 const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
-  const file = useStepOneStore((state) => state.file);
-  const setFile = useStepOneStore((state) => state.setFile);
-  const error = useStepOneStore((state) => state.error);
-  const setError = useStepOneStore((state) => state.setError);
-  const message = useStepOneStore((state) => state.message);
-  const setMessage = useStepOneStore((state) => state.setMessage);
+  const {
+    file,
+    setFile,
+    error,
+    setError,
+    message,
+    setMessage,
+    loading,
+    setLoading
+  } = useStepOneStore((state) => ({
+    file: state.file,
+    setFile: state.setFile,
+    error: state.error,
+    setError: state.setError,
+    message: state.message,
+    setMessage: state.setMessage,
+    loading: state.loading,
+    setLoading: state.setLoading
+  }));
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +77,8 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
   };
 
   const handleFileUpload = async (): Promise<void> => {
+    setLoading(true);
+
     if (!file) {
       setError('Please select a file to upload.');
       return;
@@ -90,6 +105,8 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
     } catch (error) {
       setMessage('');
       setError('Error uploading file: ' + (error as Error).message);
+    } finally {
+      setLoading(false);
     }
   };
 

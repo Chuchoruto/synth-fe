@@ -10,6 +10,10 @@ interface StepOneStoreState {
   setError: (error: string) => void;
   message: string;
   setMessage: (message: string) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  currLoadingIndex: number;
+  setCurrLoadingIndex: (rotatingLen: number) => void;
 }
 
 const useStepOneStore = create<StepOneStoreState>()(
@@ -23,7 +27,14 @@ const useStepOneStore = create<StepOneStoreState>()(
         error: '',
         setError: (error) => set({ error }),
         message: '',
-        setMessage: (message) => set({ message })
+        setMessage: (message) => set({ message }),
+        loading: false,
+        setLoading: (loading) => set({ loading }),
+        currLoadingIndex: 0,
+        setCurrLoadingIndex: (rotatingLen) =>
+          set((state) => ({
+            currLoadingIndex: (state.currLoadingIndex + 1) % rotatingLen
+          }))
       })),
       {
         name: 'stepOne-store'

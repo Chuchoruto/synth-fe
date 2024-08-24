@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type {} from '@redux-devtools/extension'; // required for devtools typing
-import { MouseEventHandler, MouseEvent } from 'react';
 
 interface PageStoreState {
   anchorElNav: null | HTMLElement;
