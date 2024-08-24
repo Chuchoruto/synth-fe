@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Stepper,
   Step,
@@ -15,7 +15,7 @@ import {
 import StepOne from '../steps/StepOne';
 import usePageOneStore from '../store/pageStore';
 
-const steps = ['Step 1', 'Step 2', 'Step 3'];
+const steps = ['Step 1', 'Step 2'];
 
 interface CustomStepperProps {}
 
@@ -24,14 +24,16 @@ const CustomStepper = (props: CustomStepperProps) => {
   const handleBack = usePageOneStore((state) => state.handleBack);
   const handleNext = usePageOneStore((state) => state.handleNext);
 
+  useEffect(() => {
+    console.log('this is the new value of activeStep:', activeStep);
+  }, [activeStep]);
+
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
         return <StepOne />;
       case 1:
         return 'Content for Step 2';
-      case 2:
-        return 'Content for Step 3';
       default:
         return 'Unknown step';
     }
@@ -50,16 +52,10 @@ const CustomStepper = (props: CustomStepperProps) => {
         {getStepContent(activeStep)}
       </Paper>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        {activeStep === 1 && (
-          <Button color="inherit" onClick={() => handleBack} sx={{ mr: 1 }}>
-            Back
-          </Button>
-        )}
         <Box sx={{ flex: '1 1 auto' }} />
-        {activeStep === 0 && <Button onClick={() => handleNext}>Next</Button>}
-        {activeStep === 1 && <Button onClick={() => handleNext}>Next</Button>}
-        {activeStep === 2 && (
-          <Button color="inherit" onClick={() => handleBack} sx={{ mr: 1 }}>
+        {activeStep === 0 && <Button onClick={handleNext}>Next</Button>}{' '}
+        {activeStep === 1 && (
+          <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
             Back
           </Button>
         )}
