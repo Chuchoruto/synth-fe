@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Stepper,
   Step,
@@ -13,21 +13,16 @@ import {
 
 // internal imports:
 import StepOne from '../steps/StepOne';
+import usePageOneStore from '../store/pageStore';
 
 const steps = ['Step 1', 'Step 2', 'Step 3'];
 
 interface CustomStepperProps {}
 
 const CustomStepper = (props: CustomStepperProps) => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  const activeStep = usePageOneStore((state) => state.activeStep);
+  const handleBack = usePageOneStore((state) => state.handleBack);
+  const handleNext = usePageOneStore((state) => state.handleNext);
 
   const getStepContent = (step: number) => {
     switch (step) {
@@ -56,15 +51,15 @@ const CustomStepper = (props: CustomStepperProps) => {
       </Paper>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         {activeStep === 1 && (
-          <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+          <Button color="inherit" onClick={() => handleBack} sx={{ mr: 1 }}>
             Back
           </Button>
         )}
         <Box sx={{ flex: '1 1 auto' }} />
-        {activeStep === 0 && <Button onClick={handleNext}>Next</Button>}
-        {activeStep === 1 && <Button onClick={handleNext}>Next</Button>}
+        {activeStep === 0 && <Button onClick={() => handleNext}>Next</Button>}
+        {activeStep === 1 && <Button onClick={() => handleNext}>Next</Button>}
         {activeStep === 2 && (
-          <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
+          <Button color="inherit" onClick={() => handleBack} sx={{ mr: 1 }}>
             Back
           </Button>
         )}

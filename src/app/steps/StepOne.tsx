@@ -7,9 +7,7 @@ import '@fontsource-variable/outfit';
 import '@fontsource-variable/overpass';
 
 // internal imports:
-import CustomAppBar from '../components/CustomAppBar';
 import FileUploadBox from '../components/FileUploadBox';
-import CustomStepper from '../components/CustomStepper';
 import useStepOneStore from '../store/stepOneStore';
 
 export default function StepOne() {

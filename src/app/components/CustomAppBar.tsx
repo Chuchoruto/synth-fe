@@ -15,10 +15,11 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = ['Home', 'About'];
 
+import usePageOneStore from '../store/pageStore';
+
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+  const anchorElNav = usePageOneStore((state) => state.anchorElNav);
+  const setAnchorElNav = usePageOneStore((state) => state.setAnchorElNav);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

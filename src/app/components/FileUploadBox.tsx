@@ -1,17 +1,23 @@
 'use client';
 
-import React, { useState, DragEvent, ChangeEvent, useRef } from 'react';
+import React, { DragEvent, ChangeEvent, useRef } from 'react';
 import { Paper, Typography, Button } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+import useStepOneStore from '../store/stepOneStore';
 
 interface FileUploadBoxProps {
   // You can add any props here if needed
 }
 
 const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  const file = useStepOneStore((state) => state.file);
+  const setFile = useStepOneStore((state) => state.setFile);
+  const error = useStepOneStore((state) => state.error);
+  const setError = useStepOneStore((state) => state.setError);
+  const message = useStepOneStore((state) => state.message);
+  const setMessage = useStepOneStore((state) => state.setMessage);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>): void => {
@@ -70,7 +76,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
       // Update the fetch URL to include /api
       const response = await fetch('https://api.samplify-app.com/api/upload', {
         method: 'POST',
-        body: formData,
+        body: formData
       });
 
       if (response.ok) {
