@@ -24,10 +24,6 @@ const CustomStepper = (props: CustomStepperProps) => {
   const handleBack = usePageOneStore((state) => state.handleBack);
   const handleNext = usePageOneStore((state) => state.handleNext);
 
-  useEffect(() => {
-    console.log('this is the new value of activeStep:', activeStep);
-  }, [activeStep]);
-
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:

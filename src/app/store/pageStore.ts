@@ -20,8 +20,6 @@ const usePageOneStore = create<PageStoreState>()(
         activeStep: 0,
         handleBack: () =>
           set((state) => {
-            console.log('state.activeStep:', state.activeStep);
-            console.log('state.activeStep - 1:', state.activeStep - 1);
             return { activeStep: state.activeStep - 1 };
           }),
         handleNext: () => set((state) => ({ activeStep: state.activeStep + 1 }))
