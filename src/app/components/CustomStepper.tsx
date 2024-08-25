@@ -14,6 +14,7 @@ import {
 // internal imports:
 import StepOne from '../steps/StepOne';
 import usePageOneStore from '../store/pageStore';
+import MetricsDashboard from './MetricsDashboard';
 
 const steps = ['Step 1', 'Step 2'];
 
@@ -31,7 +32,7 @@ const CustomStepper = (props: CustomStepperProps) => {
       case 0:
         return <StepOne />;
       case 1:
-        return 'Content for Step 2';
+        return <MetricsDashboard />;
       default:
         return 'Unknown step';
     }
