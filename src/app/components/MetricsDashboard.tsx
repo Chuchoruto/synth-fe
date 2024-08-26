@@ -22,6 +22,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
           fontWeight="bold"
           fontFamily="Outfit Variable"
           sx={styles.titleStyle}
+          // eslint-disable-next-line react/no-unescaped-entities
         >
           Your Synhetic Data's Metrics:{' '}
         </Typography>
