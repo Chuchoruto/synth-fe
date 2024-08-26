@@ -22,9 +22,8 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
           fontWeight="bold"
           fontFamily="Outfit Variable"
           sx={styles.titleStyle}
-          // eslint-disable-next-line react/no-unescaped-entities
         >
-          Your Synhetic Data's Metrics:{' '}
+          Your Synhetic Data&#39;s Metrics:{' '}
         </Typography>
         <Grid container spacing={3}>
           {metricsData.map((item, index) => (
