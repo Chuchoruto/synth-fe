@@ -13,6 +13,7 @@ import {
 
 // internal imports:
 import StepOne from '../steps/StepOne';
+import StepTwo from '../steps/StepTwo';
 import usePageOneStore from '../store/pageStore';
 import MetricsDashboard from './MetricsDashboard';
 
@@ -32,7 +33,7 @@ const CustomStepper = (props: CustomStepperProps) => {
       case 0:
         return <StepOne />;
       case 1:
-        return <MetricsDashboard />;
+        return <StepTwo />;
       default:
         return 'Unknown step';
     }
@@ -66,6 +67,7 @@ const CustomStepper = (props: CustomStepperProps) => {
 const styles = {
   stepCont: {
     padding: '0px !important',
+    width: '100%',
     backgroundColor: '#e4eae1',
 
     mt: 2,

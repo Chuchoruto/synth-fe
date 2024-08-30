@@ -4,7 +4,7 @@ import type {} from '@redux-devtools/extension'; // required for devtools typing
 
 // internal imorts:
 import type { metricsDataType } from '../customTypes/dummyDataTypes';
-import metricsData from '../mockData/dummyMetrics';
+import { generateMetricsData } from '../mockData/dummyMetrics';
 
 interface StepTwoStoreState {
   dummyData: metricsDataType[];
@@ -15,7 +15,7 @@ const useStepTwoStore = create<StepTwoStoreState>()(
   devtools(
     persist(
       devtools((set) => ({
-        dummyData: metricsData,
+        dummyData: generateMetricsData(),
         setDummyData: (newData) => set({ dummyData: newData })
       })),
       {

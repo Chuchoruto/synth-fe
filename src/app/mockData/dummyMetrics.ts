@@ -1,10 +1,14 @@
 import { metricsDataType } from '../customTypes/dummyDataTypes';
 
-const metricsData: metricsDataType[] = [
-  { title: 'Sales', value: '$6,678.67' },
-  { title: 'Orders', value: '67' },
-  { title: 'Avg order value', value: '$178.78' },
-  { title: 'Performance', value: '$39.65k' }
-];
+function generateMetricsData(): metricsDataType[] {
+  let metricsData: metricsDataType[] = [];
+  for (let i = 0; i < 30; i++) {
+    metricsData.push({
+      title: `Dimension ${i} P Value`,
+      value: Math.random().toFixed(2)
+    });
+  }
+  return metricsData;
+}
 
-export default metricsData;
+export { generateMetricsData };

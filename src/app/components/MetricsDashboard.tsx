@@ -16,7 +16,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box>
         <Typography
           variant="h6"
           fontWeight="bold"
@@ -27,7 +27,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
         </Typography>
         <Grid container spacing={3}>
           {metricsData.map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+            <Grid item xs={10} sm={8} md={6} lg={4} key={index}>
               <DashboardPanel title={item.title} metric={item.value} />
             </Grid>
           ))}
