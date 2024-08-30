@@ -23,15 +23,17 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
           fontFamily="Outfit Variable"
           sx={styles.titleStyle}
         >
-          Your Synhetic Data&#39;s Metrics:{' '}
+          Your Synhetic Data's Metrics:{' '}
         </Typography>
-        <Grid container spacing={3}>
-          {metricsData.map((item, index) => (
-            <Grid item xs={10} sm={8} md={6} lg={4} key={index}>
-              <DashboardPanel title={item.title} metric={item.value} />
-            </Grid>
-          ))}
-        </Grid>
+        <div style={{ height: '400px', overflowY: 'auto', padding: '16px' }}>
+          <Grid container spacing={3}>
+            {metricsData.map((item, index) => (
+              <Grid item xs={10} sm={8} md={6} lg={4} key={index}>
+                <DashboardPanel title={item.title} metric={item.value} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </Box>
     </>
   );
@@ -41,6 +43,11 @@ const styles = {
   titleStyle: {
     marginBottom: '3%',
     textAlign: 'left'
+  },
+  scrollableContainer: {
+    height: '400px',
+    overflowY: 'auto',
+    padding: '16px'
   }
 };
 
