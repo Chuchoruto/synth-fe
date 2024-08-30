@@ -32,8 +32,7 @@ const styles = {
   topLevelCont: {
     padding: '0px !important',
     margin: '0px !important',
-    backgroundColor: '#C9D5C3',
-    height: '100vh'
+    backgroundColor: '#C9D5C3'
   },
   bodyCont: {
     display: 'flex',
