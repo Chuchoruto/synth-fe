@@ -4,8 +4,11 @@ import type {} from '@redux-devtools/extension'; // required for devtools typing
 
 interface StepOneStoreState {
   stepOneDone: boolean;
+  setStepOneDone: (done: boolean) => void;
   file: File | null;
   setFile: (file: File | null) => void;
+  filePath: string | null; // Add filePath to store the uploaded file's path
+  setFilePath: (path: string | null) => void; // Add setFilePath action
   error: string;
   setError: (error: string) => void;
   message: string;
@@ -19,11 +22,13 @@ interface StepOneStoreState {
 const useStepOneStore = create<StepOneStoreState>()(
   devtools(
     persist(
-      devtools((set) => ({
+      (set) => ({
         stepOneDone: false,
         setStepOneDone: (done: boolean) => set({ stepOneDone: done }),
         file: null,
         setFile: (file) => set({ file }),
+        filePath: null, // Initialize filePath with null
+        setFilePath: (path) => set({ filePath: path }), // Set the filePath
         error: '',
         setError: (error) => set({ error }),
         message: '',
@@ -33,11 +38,11 @@ const useStepOneStore = create<StepOneStoreState>()(
         currLoadingIndex: 0,
         setCurrLoadingIndex: (rotatingLen) =>
           set((state) => ({
-            currLoadingIndex: (state.currLoadingIndex + 1) % rotatingLen
-          }))
-      })),
+            currLoadingIndex: (state.currLoadingIndex + 1) % rotatingLen,
+          })),
+      }),
       {
-        name: 'stepOne-store'
+        name: 'stepOne-store',
       }
     )
   )

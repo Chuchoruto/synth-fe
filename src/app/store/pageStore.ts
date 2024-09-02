@@ -13,7 +13,7 @@ interface PageStoreState {
 const usePageOneStore = create<PageStoreState>()(
   devtools(
     persist(
-      devtools((set) => ({
+      (set) => ({
         anchorElNav: null,
         setAnchorElNav: (curr_elem) => set({ anchorElNav: curr_elem }),
         activeStep: 0,
@@ -21,10 +21,10 @@ const usePageOneStore = create<PageStoreState>()(
           set((state) => {
             return { activeStep: state.activeStep - 1 };
           }),
-        handleNext: () => set((state) => ({ activeStep: state.activeStep + 1 }))
-      })),
+        handleNext: () => set((state) => ({ activeStep: state.activeStep + 1 })),
+      }),
       {
-        name: 'pageOne-store'
+        name: 'pageOne-store',
       }
     )
   )
