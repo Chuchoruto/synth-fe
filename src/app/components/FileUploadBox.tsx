@@ -6,14 +6,14 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import useStepOneStore from '../store/stepOneStore';
 
-interface FileUploadBoxProps {
-  // You can add any props here if needed
-}
+interface FileUploadBoxProps {}
 
 const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
   const {
     file,
     setFile,
+    filePath,
+    setFilePath,   // Add this line
     error,
     setError,
     message,
@@ -23,6 +23,8 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
   } = useStepOneStore((state) => ({
     file: state.file,
     setFile: state.setFile,
+    filePath: state.filePath,   // Add this line
+    setFilePath: state.setFilePath,   // Add this line
     error: state.error,
     setError: state.setError,
     message: state.message,
@@ -88,7 +90,6 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
     formData.append('file', file);
 
     try {
-      // Update the fetch URL to include /api
       const response = await fetch('https://api.samplify-app.com/api/upload', {
         method: 'POST',
         body: formData
@@ -97,6 +98,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
       if (response.ok) {
         const result = await response.json();
         setMessage('File uploaded successfully: ' + result.file_path);
+        setFilePath(result.file_path);   // Save the file path
         setError(''); // Clear any previous errors
       } else {
         setMessage('');

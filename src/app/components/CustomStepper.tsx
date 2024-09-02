@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Stepper,
   Step,
   StepLabel,
   Button,
-  Typography,
   Box,
   Paper
 } from '@mui/material';
@@ -15,7 +14,7 @@ import {
 import StepOne from '../steps/StepOne';
 import StepTwo from '../steps/StepTwo';
 import usePageOneStore from '../store/pageStore';
-import MetricsDashboard from './MetricsDashboard';
+import useStepOneStore from '../store/stepOneStore';  // Import the state from stepOneStore
 
 const steps = ['Step 1', 'Step 2'];
 
@@ -27,6 +26,49 @@ const CustomStepper = (props: CustomStepperProps) => {
     handleBack: state.handleBack,
     handleNext: state.handleNext
   }));
+
+  const { filePath, setError, setMessage, setLoading } = useStepOneStore((state) => ({
+    filePath: state.filePath,
+    setError: state.setError,
+    setMessage: state.setMessage,
+    setLoading: state.setLoading,
+  }));
+
+  const initializeModel = async () => {
+    setLoading(true);
+
+    if (!filePath) {
+      setError('No file uploaded to initialize the model.');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('https://api.samplify-app.com/api/initialize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          csv_path: filePath,
+          num_samples: 100 // or any other value you need
+        })
+      });
+
+      if (response.ok) {
+        setMessage('Model initialized successfully!');
+        setError('');
+        handleNext();  // Proceed to the next step only if initialization is successful
+      } else {
+        const errorData = await response.json();
+        setError('Failed to initialize model: ' + errorData.error);
+      }
+    } catch (error) {
+      setError('Error initializing model: ' + (error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStepContent = (step: number) => {
     switch (step) {
@@ -53,7 +95,9 @@ const CustomStepper = (props: CustomStepperProps) => {
       </Paper>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
         <Box sx={{ flex: '1 1 auto' }} />
-        {activeStep === 0 && <Button onClick={handleNext}>Next</Button>}{' '}
+        {activeStep === 0 && (
+          <Button onClick={initializeModel}>Next</Button> // Trigger initialization when Next is clicked
+        )}
         {activeStep === 1 && (
           <Button color="inherit" onClick={handleBack} sx={{ mr: 1 }}>
             Back
@@ -69,7 +113,6 @@ const styles = {
     padding: '0px !important',
     width: '100%',
     backgroundColor: '#e4eae1',
-
     mt: 2,
     p: 3,
     minHeight: '200px'
