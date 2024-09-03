@@ -17,6 +17,7 @@ const DownloadFileBox: React.FC = () => {
       console.log("Starting download...");
       const response = await fetch('https://api.samplify-app.com/api/download-synthetic-csv', {
         method: 'GET',
+        credentials: 'include', // Include credentials (cookies) in the request
       });
   
       if (response.ok) {
@@ -44,7 +45,6 @@ const DownloadFileBox: React.FC = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <Container sx={styles.bodyCont}>
