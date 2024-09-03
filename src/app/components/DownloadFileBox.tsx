@@ -1,20 +1,49 @@
 'use client';
 
-// external imports:
-import React, { useEffect } from 'react';
-import { Container, Typography, Button } from '@mui/material';
+import React from 'react';
+import { Container, Button } from '@mui/material';
+import useStepOneStore from '../store/stepOneStore';
 
-interface DownloadFileBoxProps {}
+const DownloadFileBox: React.FC = () => {
+  const { setLoading, setError } = useStepOneStore((state) => ({
+    setLoading: state.setLoading,
+    setError: state.setError,
+  }));
 
-const DownloadFileBox: React.FC<DownloadFileBoxProps> = () => {
+  const handleDownload = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('https://api.samplify-app.com/api/download-synthetic-csv', {
+        method: 'GET',
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'synthetic_data.csv'; // Default download name, adjust if needed
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        setError('Failed to download synthetic data.');
+      }
+    } catch (error) {
+      setError('Error downloading file: ' + (error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Container sx={styles.bodyCont}>
-      <Button variant="contained">Download Synthetic Data</Button>
+      <Button variant="contained" onClick={handleDownload}>
+        Download Synthetic Data
+      </Button>
     </Container>
   );
 };
-
-export default DownloadFileBox;
 
 const styles = {
   bodyCont: {
@@ -24,6 +53,8 @@ const styles = {
     flexDirection: 'column',
     marginTop: '20%',
     alignItems: 'center',
-    padding: 3
-  }
+    padding: 3,
+  },
 };
+
+export default DownloadFileBox;
