@@ -45,7 +45,7 @@ const DownloadFileBox: React.FC = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <Container sx={styles.bodyCont}>
       <Button variant="contained" onClick={handleDownload}>

@@ -36,13 +36,13 @@ const CustomStepper = (props: CustomStepperProps) => {
 
   const initializeModel = async () => {
     setLoading(true);
-
+  
     if (!filePath) {
       setError('No file uploaded to initialize the model.');
       setLoading(false);
       return;
     }
-
+  
     try {
       const response = await fetch('https://api.samplify-app.com/api/initialize', {
         method: 'POST',
@@ -52,9 +52,10 @@ const CustomStepper = (props: CustomStepperProps) => {
         body: JSON.stringify({
           csv_path: filePath,
           num_samples: 100 // or any other value you need
-        })
+        }),
+        credentials: 'include'  // Include credentials (cookies) with the request
       });
-
+  
       if (response.ok) {
         setMessage('Model initialized successfully!');
         setError('');
@@ -69,6 +70,7 @@ const CustomStepper = (props: CustomStepperProps) => {
       setLoading(false);
     }
   };
+  
 
   const getStepContent = (step: number) => {
     switch (step) {

@@ -84,21 +84,22 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
 
   const handleFileUpload = async (): Promise<void> => {
     setLoading(true);
-
+  
     if (!file) {
       setError('Please select a file to upload.');
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('file', file);
-
+  
     try {
       const response = await fetch('https://api.samplify-app.com/api/upload', {
         method: 'POST',
         body: formData,
+        credentials: 'include', // Include credentials (cookies) in the request
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         setMessage('File uploaded successfully: ' + result.file_path);
@@ -115,6 +116,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
