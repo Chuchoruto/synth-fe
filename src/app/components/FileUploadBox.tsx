@@ -3,7 +3,6 @@
 import React, { DragEvent, ChangeEvent, useRef } from 'react';
 import { Paper, Typography, Button } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
 import useStepOneStore from '../store/stepOneStore';
 
 interface FileUploadBoxProps {}
@@ -13,24 +12,28 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
     file,
     setFile,
     filePath,
-    setFilePath,   // Add this line
+    setFilePath,
+    originalFilename, // Add this line
+    setOriginalFilename, // Add this line
     error,
     setError,
     message,
     setMessage,
     loading,
-    setLoading
+    setLoading,
   } = useStepOneStore((state) => ({
     file: state.file,
     setFile: state.setFile,
-    filePath: state.filePath,   // Add this line
-    setFilePath: state.setFilePath,   // Add this line
+    filePath: state.filePath,
+    setFilePath: state.setFilePath,
+    originalFilename: state.originalFilename, // Add this line
+    setOriginalFilename: state.setOriginalFilename, // Add this line
     error: state.error,
     setError: state.setError,
     message: state.message,
     setMessage: state.setMessage,
     loading: state.loading,
-    setLoading: state.setLoading
+    setLoading: state.setLoading,
   }));
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -59,7 +62,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
   const validateFile = (file: File): void => {
     const validTypes: string[] = [
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'text/csv'
+      'text/csv',
     ];
     const fileType: string = file.type;
     const fileExtension: string =
@@ -70,6 +73,7 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
       ['xlsx', 'csv'].includes(fileExtension)
     ) {
       setFile(file);
+      setOriginalFilename(file.name); // Save the original filename
       setError('');
       setMessage(''); // Clear any previous messages
     } else {
@@ -92,13 +96,13 @@ const FileUploadBox: React.FC<FileUploadBoxProps> = () => {
     try {
       const response = await fetch('https://api.samplify-app.com/api/upload', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
 
       if (response.ok) {
         const result = await response.json();
         setMessage('File uploaded successfully: ' + result.file_path);
-        setFilePath(result.file_path);   // Save the file path
+        setFilePath(result.file_path); // Save the file path
         setError(''); // Clear any previous errors
       } else {
         setMessage('');
@@ -177,8 +181,8 @@ const styles = {
     alignItems: 'center',
     border: '2px dashed #ccc',
     borderRadius: 2,
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 };
 
 export default FileUploadBox;

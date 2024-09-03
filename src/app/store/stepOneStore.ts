@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import type {} from '@redux-devtools/extension'; // required for devtools typing
 
 interface StepOneStoreState {
   stepOneDone: boolean;
-  setStepOneDone: (done: boolean) => void;
   file: File | null;
+  filePath: string | null;
+  originalFilename: string | null; // Add this line
   setFile: (file: File | null) => void;
-  filePath: string | null; // Add filePath to store the uploaded file's path
-  setFilePath: (path: string | null) => void; // Add setFilePath action
+  setFilePath: (path: string | null) => void;
+  setOriginalFilename: (filename: string | null) => void; // Add this line
   error: string;
   setError: (error: string) => void;
   message: string;
@@ -24,11 +24,12 @@ const useStepOneStore = create<StepOneStoreState>()(
     persist(
       (set) => ({
         stepOneDone: false,
-        setStepOneDone: (done: boolean) => set({ stepOneDone: done }),
         file: null,
+        filePath: null,
+        originalFilename: null, // Add this line
         setFile: (file) => set({ file }),
-        filePath: null, // Initialize filePath with null
-        setFilePath: (path) => set({ filePath: path }), // Set the filePath
+        setFilePath: (path) => set({ filePath: path }),
+        setOriginalFilename: (filename) => set({ originalFilename: filename }), // Add this line
         error: '',
         setError: (error) => set({ error }),
         message: '',
