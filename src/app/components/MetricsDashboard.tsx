@@ -24,10 +24,16 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
     const fetchKsPValues = async () => {
       setLoading(true);
       try {
-        const response = await fetch('https://api.samplify-app.com/api/get-ks'); // Ensure this matches your API endpoint
+        const response = await fetch('https://api.samplify-app.com/api/get-ks', {
+          credentials: 'include' // Ensures cookies (session) are sent
+        });
+        console.log("Response status:", response.status);
+        console.log("Response headers:", response.headers);
+  
         if (!response.ok) throw new Error("Failed to fetch KS p-values");
-
+  
         const data = await response.json();
+        console.log("KS p-values data:", data); // Check the fetched data format
         setKsData(data);
       } catch (error) {
         console.error("Error fetching KS p-values:", error);
@@ -36,10 +42,9 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
         setLoading(false);
       }
     };
-
+  
     fetchKsPValues();
   }, []);
-
   return (
     <Box>
       <Typography
