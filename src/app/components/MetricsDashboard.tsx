@@ -48,7 +48,7 @@ const MetricsDashboard: React.FC<MetricsDashboardProps> = () => {
         fontFamily="Outfit Variable"
         sx={styles.titleStyle}
       >
-        Your Synthetic Data's KS Metrics
+        Your Synthetic Data&apos;s KS Metrics
       </Typography>
       <div style={{ height: '400px', overflowY: 'auto', padding: '16px' }}>
         <Grid container spacing={3}>
